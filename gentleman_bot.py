@@ -54,7 +54,7 @@ bits = {1: {'winner': 0},
 chess_list = ["Пешка", "Конь", "Слон", "Ладья", "Ферзь", "eat", "lose", "checkmate", "got_checkmate", "next_player", "really_checkmate"]
 chesspiece_price = {"Пешка": 1, "Конь": 3, "Слон": 3, "Ладья": 5, "Ферзь": 9}
 
-game_flag = "sport"  # sport  chess  fond_market
+game_flag = "sport"  # sport/chess/fond_market
 
 
 # открываем сохраненную игру
@@ -86,9 +86,6 @@ with open('save_players.json') as f:
     except:
         players = {}
 
-
-print(f"players = {players}")
-print(f"Game flag = {game_flag}")
 
 sticker = 'CAACAgIAAxkBAAIPnV67u5l7uBx-N1IYtu70VgclQuO4AAIVAwACnNbnCgbnCWarj1O-GQQ'
 sticker_2 = 'CAACAgIAAxkBAAIP3167xcJI92k-JiH6O1tBSEvKzSUEAAISAwACnNbnChxSQ7QkdV0oGQQ'
@@ -236,7 +233,7 @@ def max_profit_from_company(id):
         return a
 
 
-# клава со списком компаний
+# клавиатура со списком компаний
 def keyboard(id):
     keyboard = types.InlineKeyboardMarkup()
     for company in round_list(id):   # x = round_list
@@ -244,7 +241,7 @@ def keyboard(id):
     return keyboard
 
 
-# клава готовы начать раунд?
+# клавиатура готовы начать раунд?
 def keyboard_begin_round():
     keyboard = types.InlineKeyboardMarkup()
     yes = types.InlineKeyboardButton(text="Да", callback_data='begin')
@@ -252,7 +249,7 @@ def keyboard_begin_round():
     return keyboard
 
 
-# клава Гавр, покажи результат
+# клавиатура Ведущий, покажи результат
 def keyboard_result():
     keyboard = types.InlineKeyboardMarkup()
     yes = types.InlineKeyboardButton(text="Показать", callback_data='yes')
@@ -418,7 +415,7 @@ def put_gamer_to_base(message):
     return
 
 
-# клава со списком участников для удаления
+# клавиатура со списком участников для удаления
 def delete_keyboard():
     keyboard = types.InlineKeyboardMarkup()
     for player in players:
@@ -426,7 +423,7 @@ def delete_keyboard():
     return keyboard
 
 
-# клава со списком участников для изменения денег
+# клавиатура со списком участников для изменения денег
 def correction_keyboard():
     keyboard = types.InlineKeyboardMarkup()
     for player in players:
@@ -434,7 +431,7 @@ def correction_keyboard():
     return keyboard
 
 
-# клава нокаут
+# клавиатура нокаут
 def keyboard_knockout():
     keyboard = types.InlineKeyboardMarkup()
     yes = types.InlineKeyboardButton(text="Хочу", callback_data='want_knockout')
@@ -443,7 +440,7 @@ def keyboard_knockout():
     return keyboard
 
 
-# клава раунд нокаута
+# клавиатура раунд нокаута
 def keyboard_knockout_round():
     keyboard = types.InlineKeyboardMarkup()
     yes = types.InlineKeyboardButton(text="Хочу", callback_data='want_knockout_round')
@@ -452,7 +449,7 @@ def keyboard_knockout_round():
     return keyboard
 
 
-# клава хочешь поставить на результат футбола?
+# клавиатура хочешь поставить на результат футбола?
 def keyboard_football_result():
     keyboard = types.InlineKeyboardMarkup()
     yes = types.InlineKeyboardButton(text="Хочу", callback_data='want_result')
@@ -461,7 +458,7 @@ def keyboard_football_result():
     return keyboard
 
 
-# клава хочешь поставить на результат хоккея?
+# клавиатура хочешь поставить на результат хоккея?
 def keyboard_hockey_result():
     keyboard = types.InlineKeyboardMarkup()
     yes = types.InlineKeyboardButton(text="Хочу", callback_data='want_hockey_result')
@@ -470,7 +467,7 @@ def keyboard_hockey_result():
     return keyboard
 
 
-# клава футбольная ничья
+# клавиатура футбольная ничья
 def keyboard_no_football_winner():
     keyboard = types.InlineKeyboardMarkup()
     yes = types.InlineKeyboardButton(text="Хочу", callback_data='want_result')
@@ -479,7 +476,7 @@ def keyboard_no_football_winner():
     return keyboard
 
 
-# клава хоккейная ничья
+# клавиатура хоккейная ничья
 def keyboard_no_hockey_winner():
     keyboard = types.InlineKeyboardMarkup()
     yes = types.InlineKeyboardButton(text="Хочу", callback_data='want_hockey_result')
@@ -488,7 +485,7 @@ def keyboard_no_hockey_winner():
     return keyboard
 
 
-# клава результат футбола
+# клавиатура результат футбола
 def keyboard_match_result():
     keyboard = types.InlineKeyboardMarkup()
     nul = types.InlineKeyboardButton(text="0 голов", callback_data='0 goal')
@@ -503,7 +500,7 @@ def keyboard_match_result():
     return keyboard
 
 
-# клава результат хоккея
+# клавиатура результат хоккея
 def keyboard_hockey_match_result():
     keyboard = types.InlineKeyboardMarkup()
     nul = types.InlineKeyboardButton(text="0 шайб", callback_data='0 goal')
@@ -795,7 +792,7 @@ def choose_player_for_chess():
             players[player]["chess"] = "ходит сейчас"
         bot.send_message(325051402, f"Играем в шахматы. {players[player]['name']} {players[player]['last_name']}...", reply_markup=keyboard_chess())
     else:
-        bot.send_message(325051402, "Гавр, в игре нет игроков, что за дела?", reply_markup=keyboard_start_game())
+        bot.send_message(325051402, "Ведущий, в игре нет игроков", reply_markup=keyboard_start_game())
 
 
 def chess_game(message):
@@ -811,11 +808,11 @@ def chess_game(message):
     elif message.data == "checkmate":
         right_now = [player for player in players if players[player]["chess"] == "ходит сейчас"][0]
         players[right_now]["choose"] = "checkmate"
-        bot.send_message(325051402, f"Гавр, {players[right_now]['name']} {players[right_now]['last_name']} точно поставил мат?", reply_markup=keyboard_really_checkmate())
+        bot.send_message(325051402, f"Ведущий, {players[right_now]['name']} {players[right_now]['last_name']} точно поставил мат?", reply_markup=keyboard_really_checkmate())
     elif message.data == "got_checkmate":
         right_now = [player for player in players if players[player]["chess"] == "ходит сейчас"][0]
         players[right_now]["choose"] = "got_checkmate"
-        bot.send_message(325051402, f"Гавр, {players[right_now]['name']} {players[right_now]['last_name']} точно получил мат?", reply_markup=keyboard_really_checkmate())
+        bot.send_message(325051402, f"Ведущий, {players[right_now]['name']} {players[right_now]['last_name']} точно получил мат?", reply_markup=keyboard_really_checkmate())
     elif message.data == "next_player":
         choose_player_for_chess()
     elif message.data == "really_checkmate":
@@ -823,13 +820,12 @@ def chess_game(message):
         if players[right_now]["choose"] == "checkmate":
             players[right_now]["money"] += 10
             players[right_now]["round_result"] += 10
-            bot.send_message(325051402, f"Гавр, {players[right_now]['name']} {players[right_now]['last_name']} срубил что-нибудь, когда ставил мат?", reply_markup=keyboard_chesspiece())
+            bot.send_message(325051402, f"Ведущий, {players[right_now]['name']} {players[right_now]['last_name']} срубил что-нибудь, когда ставил мат?", reply_markup=keyboard_chesspiece())
         elif players[right_now]["choose"] == "got_checkmate":
             players[right_now]["money"] -= 10
             players[right_now]["round_result"] -= 10
-            bot.send_message(325051402, f"Гавр, {players[right_now]['name']} {players[right_now]['last_name']} потерял что-нибудь, когда получил мат?", reply_markup=keyboard_chesspiece())
+            bot.send_message(325051402, f"Ведущий, {players[right_now]['name']} {players[right_now]['last_name']} потерял что-нибудь, когда получил мат?", reply_markup=keyboard_chesspiece())
     elif message.data in chesspiece_price:
-        print("я здесь")
         right_now = [player for player in players if players[player]["chess"] == "ходит сейчас"][0]
         if players[right_now]["choose"] == "eat" or players[right_now]["choose"] == "checkmate":
             players[right_now]["money"] += chesspiece_price[message.data]
@@ -838,7 +834,7 @@ def chess_game(message):
             players[right_now]["money"] -= chesspiece_price[message.data]
             players[right_now]["round_result"] -= chesspiece_price[message.data]
         if players[right_now]["choose"] == "eat":
-            bot.send_message(325051402, f"Гавр, {players[right_now]['name']} {players[right_now]['last_name']} потерял что-нибудь?", reply_markup=keyboard_also_lose())
+            bot.send_message(325051402, f"Ведущий, {players[right_now]['name']} {players[right_now]['last_name']} потерял что-нибудь?", reply_markup=keyboard_also_lose())
         elif players[right_now]["choose"] == "lose":
             choose_player_for_chess()
         elif players[right_now]["choose"] == "checkmate" or players[right_now]["choose"] == "got_checkmate":
@@ -846,7 +842,7 @@ def chess_game(message):
                 bot.send_message(player, f"Итоги шахматной партии:\n{common_chess_result()}")
             bot.send_message(325051402, f"Итоги шахматного раунда:\n{common_chess_result()}")
             game_flag = "fond_market"
-            bot.send_message(325051402, "Гавр, начнем игру (фонд рынок)?", reply_markup=keyboard_start_game())
+            bot.send_message(325051402, "Ведущий, начнем игру (фонд рынок)?", reply_markup=keyboard_start_game())
     saving()
 
 
@@ -922,7 +918,7 @@ def command_hadler(message):
             if len(players) == 1:
                 players[message.from_user.id]["round_number"] = 1
                 bot.send_message(message.from_user.id, "Добро пожаловать в игру Джентльмен!\nНадеюсь вы были успешны в карточной игре. Сколько вам удалось заработать?")
-                bot.send_message(325051402, "Гавр, начнем игру (ставки)?\n\nТолько не забудь проверить, сколько они внесли на счет - /rich", reply_markup=keyboard_start_game())
+                bot.send_message(325051402, "Ведущий, начнем игру (ставки)?\n\nТолько не забудь проверить, сколько они внесли на счет - /rich", reply_markup=keyboard_start_game())
             else:
                 players[message.from_user.id]["round_number"] = [players[player]["round_number"] for player in players if player != message.from_user.id][0]
                 if players[message.from_user.id]["round_number"] == 1 and game_flag == "sport":
@@ -964,12 +960,12 @@ def answer(message):
             sport_result_counting()
             sport_result_show()
             if [players[player]["round_number"] for player in players][0] != 4:
-                bot.send_message(325051402, "Гавр, начнем новый раунд?", reply_markup=keyboard_begin_round())
+                bot.send_message(325051402, "Ведущий, начнем новый раунд?", reply_markup=keyboard_begin_round())
             else:
                 for player in players:
                     players[player]["round_number"] = 1
                 game_flag = "chess"
-                bot.send_message(325051402, "Гавр, начнем игру (шахматы)?", reply_markup=keyboard_start_game())
+                bot.send_message(325051402, "Ведущий, начнем игру (шахматы)?", reply_markup=keyboard_start_game())
         else:
             for i in players:
                 players[i]["debt"] *= 2
@@ -988,7 +984,7 @@ def answer(message):
                         bot.send_message(player, lose_money(player))
             bot.send_message(325051402, f"{round_table_str[0] if players[player]['round_number'] == 7 else round_table_str}")
             if players[player]['round_number'] < 7:
-                bot.send_message(325051402, f"Гавр, начнем следующий раунд?", reply_markup=keyboard_begin_round())
+                bot.send_message(325051402, f"Ведущий, начнем следующий раунд?", reply_markup=keyboard_begin_round())
         saving()
     elif message.data == 'begin':
         if game_flag == "sport":
@@ -1034,13 +1030,13 @@ def answer(message):
             bot.send_message(325051402, "Этот игрок уже был удален ранее")
     elif message.data == 'round_sport':
         game_flag = "sport"
-        bot.send_message(325051402, "Гавр, начнем игру (ставки)?", reply_markup=keyboard_start_game())
+        bot.send_message(325051402, "Ведущий, начнем игру (ставки)?", reply_markup=keyboard_start_game())
     elif message.data == 'round_chess':
         game_flag = "chess"
-        bot.send_message(325051402, "Гавр, начнем игру (шахматы)?", reply_markup=keyboard_start_game())
+        bot.send_message(325051402, "Ведущий, начнем игру (шахматы)?", reply_markup=keyboard_start_game())
     elif message.data == 'round_fond_market':
         game_flag = "fond_market"
-        bot.send_message(325051402, "Гавр, начнем игру (фонд рынок)?", reply_markup=keyboard_start_game())
+        bot.send_message(325051402, "Ведущий, начнем игру (фонд рынок)?", reply_markup=keyboard_start_game())
     elif message.data[:10] == "correction":
         if 325051402 in players:
             players[325051402]["correction"] = int(message.data[11:])
@@ -1089,7 +1085,7 @@ def sticker_hadler(message):
                         bot.send_message(message.from_user.id, "Ваша ставка принята. Подождем остальных и посмотрим, чья ставка сыграла.")
                         if 0 not in [players[player]["bit"] for player in players]:
                             bot.send_message(325051402, players_bits_table())
-                            bot.send_message(325051402, "Гавр, все сделали ставки. Показать результаты?", reply_markup=keyboard_result())
+                            bot.send_message(325051402, "Ведущий, все сделали ставки. Показать результаты?", reply_markup=keyboard_result())
                 else:
                     if players[message.from_user.id]['choose'] in round_list(message.from_user.id):
                         investment = int(message.text)
@@ -1106,7 +1102,7 @@ def sticker_hadler(message):
                                 bot.send_message(325051402, f'{players[message.from_user.id]["name"]} закончил {players[message.from_user.id]["round_number"]} раунд c {money_result(message.from_user.id)} долларов')
                                 players[message.from_user.id]["finish"][players[message.from_user.id]["round_number"]] = 1
                                 if sum([players[i]["finish"][players[message.from_user.id]["round_number"]] for i in players]) == len(players):
-                                    bot.send_message(325051402, 'Гавр, разреши посмотреть результаты', reply_markup=keyboard_result())
+                                    bot.send_message(325051402, 'Ведущий, разреши посмотреть результаты', reply_markup=keyboard_result())
                                     bot.send_message(325051402, investment_table())
                             else:
                                 bot.send_message(message.from_user.id, f"Не останавливайтесь, у вас еще {money - round_investment} {dollar_word(money - round_investment)}.\n\nВы уже проинвестировали:\n{already_invested(message.from_user.id)}.\n\nЧьи акции хотите купить?", reply_markup=keyboard(message.from_user.id))
