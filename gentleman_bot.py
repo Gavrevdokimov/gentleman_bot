@@ -6,8 +6,9 @@ import random
 import copy
 import math
 import json
+import os
 
-token = "1154762077:AAHieoTvSglFAjiFhft4GVNVRxxjKvuEh8k"
+token = os.environ.get("BOT_TOKEN")
 bot = telebot.TeleBot(token)
 
 companies = {1: {'Standard Oil': 0, 'White Star Line': 0, 'Charron': 0, 'Путиловские заводы': 0, 'Grönvik glasbruk': 0},
