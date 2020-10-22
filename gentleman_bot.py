@@ -902,7 +902,6 @@ def command_hadler(message):
     global game_flag
     if message.text == "/start":
         if message.from_user.id not in players:
-            put_gamer_to_base(message)
             players[message.from_user.id] = {}
             players[message.from_user.id]["money"] = -1000000
             players[message.from_user.id]["choose"] = 0
@@ -915,6 +914,7 @@ def command_hadler(message):
             players[message.from_user.id]["bit"] = 0
             players[message.from_user.id]["chess"] = 0
             players[message.from_user.id]["round_result"] = 0
+            put_gamer_to_base(message)
             if len(players) == 1:
                 players[message.from_user.id]["round_number"] = 1
                 bot.send_message(message.from_user.id, "Добро пожаловать в игру Джентльмен!\nНадеюсь вы были успешны в карточной игре. Сколько вам удалось заработать?")
